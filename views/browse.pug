@@ -124,12 +124,13 @@ block content
             span=y.NUMBER 
           span )
 
-  h3 
-    a(data-toggle="collapse", data-target="#toc_resources", aria-expanded="false", aria-controls="toc_resources", class="info_collapse glyphicon glyphicon-info-sign") resources by name
-  section(id="toc_resources", class="collapse")
-    for x,i in resourcesList
-      section(class='list', class=x.NAME.charAt(0).toUpperCase())
-        a(href=x.URI data-toggle="collapse", data-target='#'+x.ID, aria-expanded="false", aria-controls="toc_resources", class="group info_collapse glyphicon glyphicon-info-sign")= x.NAME
-        p(id=x.ID, class="collapse")=x.DESC
+  section.row.graph
+    h3.col-lg-12 
+      a(data-toggle="collapse", data-target="#toc_resources", aria-expanded="false", aria-controls="toc_resources", class="info_collapse glyphicon glyphicon-info-sign") resources by name
+    section(id="toc_resources", class="collapse")
+      for x,i in resourcesList
+        section(class='list col-lg-12', class=x.NAME.charAt(0).toUpperCase())
+          a(href=x.URI data-toggle="collapse", data-target='#'+x.ID, aria-expanded="false", aria-controls="toc_resources", class="group info_collapse glyphicon glyphicon-info-sign")= x.NAME
+          p(id=x.ID, class="collapse")=x.DESC
 
     

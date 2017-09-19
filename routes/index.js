@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs')
+var fs = require('fs');
 var rdf = require('rdflib');
 var SparqlClient = require('sparql-client-2');
 var uuidv4 = require('uuid/v4');
