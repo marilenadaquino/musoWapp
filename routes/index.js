@@ -20,6 +20,9 @@ var queryAudience = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT
 var queryCountFormat = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?format ?formatLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?resourceType ; <http://data.open.ac.uk/musow/ontology/scope/format> ?format . ?format rdfs:label ?formatLabel . } group by ?format ?formatLabel ?count order by DESC(?count) LIMIT 10'
 var queryCountLicense = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?licenseLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?resourceType ; <http://purl.org/dc/terms/license> ?license . ?license rdfs:label ?licenseLabel } group by ?licenseLabel ?count order by DESC(?count) '
 var queryCountScale = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?label (COUNT(?project) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?project <http://purl.org/dc/terms/extent> ?size . ?size rdfs:label ?label . } GROUP BY ?label ORDER BY ?label'
+// var queryScopeAndType = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?resourceLabel ?topicLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?resourceType ; <http://www.w3.org/ns/oa#hasScope> ?topic . ?resourceType rdfs:label ?resourceLabel . ?topic rdfs:label ?topicLabel . } group by ?resourceLabel ?topicLabel ?count order by ?resourceLabel DESC(?count)'
+var queryCountTopic = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT  ?topicLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://www.w3.org/ns/oa#hasScope> ?topic . ?topic rdfs:label ?topicLabel . ?resourceType rdfs:label ?resourceLabel . } group by ?topicLabel?count order by DESC (?count)'
+var queryCountFeature = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT  ?topicLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://xmlns.com/foaf/0.1/primaryTopic> ?topic . ?topic rdfs:label ?topicLabel . ?resourceType rdfs:label ?resourceLabel . } group by ?topicLabel?count order by DESC (?count)'
 
 var resourcesList = []; 
 var resourcesCount = []; 
@@ -28,6 +31,9 @@ var resourcesAudience =[]; var audienceOnly = []; var countAudienceOnly = [];
 var resourcesFormat = []; var formatOnly = []; var countFormatOnly = [];
 var resourcesLicense = [];
 var resourcesScale = []; var scaleOnly = []; var countScaleOnly = [];
+// var resourcesScopeAndType = [];
+var resourcesTopic = [];
+var resourcesFeature = []; var featureOnly = []; var countFeatureOnly = [];
 
 var client = new SparqlClient(endpoint, {
   defaultParameters: { format: 'json' }
@@ -147,6 +153,38 @@ client.query(queryCountScale).execute()
 		console.log('ops, something went wrong')
 	});
 
+// Count of resources gropued by topic
+client.query(queryCountTopic).execute()
+	.then(function (results) {
+		for (var i=0; i<results.results.bindings.length; i++) {
+			resourcesTopic.push({
+				"ID": uuidv4(),
+				"TOPIC": results.results.bindings[i].topicLabel.value,
+				"NUMBER": results.results.bindings[i].count.value
+			});
+		};
+		// console.log(resourcesCount)
+	}).catch(function (error) {
+		console.log('ops, something went wrong')
+	});
+
+// Count of resources grouped by feature
+client.query(queryCountFeature).execute()
+	.then(function (results) {
+		for (var i=0; i<results.results.bindings.length; i++) {
+			resourcesFeature.push({
+				"ID": uuidv4(),
+				"FEATURE": results.results.bindings[i].topicLabel.value,
+				"NUMBER": results.results.bindings[i].count.value
+			});
+			featureOnly.push("'"+results.results.bindings[i].topicLabel.value+"'");
+			countFeatureOnly.push(results.results.bindings[i].count.value);
+		};
+		// console.log(resourcesCount)
+	}).catch(function (error) {
+		console.log('ops, something went wrong')
+	});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'musoW' });
@@ -163,7 +201,14 @@ router.get('/browse', function(req, res, next) {
   							countFormatOnly ,
   							resourcesLicense ,
   							scaleOnly ,
-  							countScaleOnly });
+  							countScaleOnly ,
+  							resourcesTopic ,
+  							featureOnly ,
+  							countFeatureOnly });
+});
+
+router.get('/resources', function(req, res, next) {
+  res.render('resources', { title: 'resources', resourcesList });
 });
 
 router.get('/explore', function(req, res, next) {

@@ -9,13 +9,17 @@ html
     script(src='/javascripts/js/bootstrap.min.js')
     script(src='/javascripts/js/musow.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js')
+    script(src='https://use.fontawesome.com/f8eecea9d3.js')
   body.container-fluid
     nav.menu.row
         ul.col-lg-12
           li
             a(href='./') musoW
-          li
-            a(href='/browse') BROWSE
+          li(class='dropdown')
+            a(class='dropdown-toggle', id='browseMenu', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') BROWSE
+            div(class='dropdown-menu', aria-labelledby='browseMenu')
+              a(href='/browse') summary
+              a(href='/resources') resources
           li
             a(href='/explore') EXPLORE
           li
@@ -26,6 +30,7 @@ html
       
     section(class='main-content')
       block content
-    footer.col-md-3
-      h3 contact
-      p on <a href='https://github.com/enridaga/musow'>github</a>
+    footer.col-md-12
+      section
+        h3 contact
+        p on <a href='https://github.com/enridaga/musow'>github</a>

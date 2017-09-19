@@ -39,7 +39,6 @@ header {z-index: 10000;
 	letter-spacing: 0.05em; 
 	font-weight: 700; 
 	margin: 0px !important;
-	overflow: hidden;
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -56,8 +55,10 @@ header {z-index: 10000;
 	margin-right: 2em;
 	display: inline;
 }
-.menu li a {text-decoration: none; color: #fff;}
+.menu li a {text-decoration: none; color: #fff !important;}
 .menu li:first-of-type {float: left;}
+.dropdown-menu {border: none !important; background-color: rgb(204,142,164) !important;}
+.dropdown-menu a {padding: 0.5em; display: block;}
 #intro, #browse, #explore, #contribute, footer {z-index: 10000; padding: 3em 1em;}
 #intro a, #browse a, #explore a, #contribute a {color: #fff; display: inline-block; background-color: #0d107a; padding: 0.3em;}
 #intro, #explore {margin-right: 10em; padding-left: 1em;}
@@ -98,14 +99,25 @@ p, .sentence {font-size: 1.1em; line-height: 1.4em;}
 	}
 .square h2 {font-size: 4em !important; text-align: center; padding-left: 0 !important;}
 .pink { background-color: rgb(204,142,164); color: #fff; }
-.grey { background-color: rgb(222,222,224);}
-.white { color: rgb(204,142,164); background-color: #fff;}
-.tags {margin: 0 auto;}
+.grey { background-color: rgb(152,152,154);}
+.white { background-color: #fff;}
+.tags {margin: 0 auto; padding: 0px 3em;}
 .tag {padding: 0.6em; margin: 0.3em; border-radius: 5px}
+.bookmark {display: inline-block; padding: 1em 2em;}
+.bookmark span {display: block; text-align: center;}
+.bookmark span:nth-of-type(1) {font-size: 3em;  padding-bottom: 0.3em;}
+.bookmark i {font-size: 9em;}
+
+footer {
+	background-color: rgb(204,142,164);
+	color: #fff;
+}
+
+footer section {padding: 3em;}
 @media only screen and (max-width: 64em) { 
 	h1 {font-size: 5rem !important; padding-left: 1em !important;}
 	h2 {font-size: 3rem !important; padding-left: 4em !important;}
-	h3, p {font-size: 1.5rem !important;}
+	h3, p {font-size: 1.3rem !important;}
 	#intro, #explore {padding-left: 8em; margin-right: 0px; margin-top: 0px !important;}
 	#browse, #contribute {padding: 0em 6em; margin-left: 0px;}
 }
