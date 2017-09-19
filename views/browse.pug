@@ -1,0 +1,135 @@
+extends layout2
+
+block content
+  
+  section.row.graph
+    p(class='col-lg-2 sentence right') we collected information about several kind of resources
+    for x,i in resourcesCount
+      section(class='square col-lg-2')
+        h2=x.NUMBER
+        p=x.TYPE
+ 
+  section.row.graph.back-img
+    p(class='col-lg-5 sentence right') that deal with symbolic notated music (sheets), descriptive metadata (e.g. artists, genres, cataloguing information), and audio files
+    for y,j in resourcesSubject
+      section(class='square pink col-lg-2')
+        h2=y.NUMBER
+        p=y.TYPE
+  
+  section.row.graph
+    canvas(id='audience', class="col-lg-6")
+    script.
+      var ctx = document.getElementById("audience");
+      var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: { 
+        labels:[#{audienceOnly}],
+        datasets: [{
+            label: 'resources',
+            data:[#{countAudienceOnly}],
+            backgroundColor: [
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)'
+            ],
+            borderColor: [
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(204,142,164,1)'
+            ],
+            borderWidth: 1 }] },
+            options: {
+            scales: {
+            yAxes: [{ ticks: { beginAtZero:true } }]
+            } }
+            }); 
+    p(class='col-lg-3 sentence left') we mainly relied on resources realized by researchers and targeted to researchers, but we also found other target audiences
+  
+  section.row.graph
+    p(class='col-lg-3 sentence right') the majority of them offer digitizations of scores and lyrics, followed by audio files and structured data, which are published in several formats    
+    canvas(id='format', class="col-lg-7")
+    script.
+      var doughnut = document.getElementById("format");
+      var myChart = new Chart(doughnut, {
+      type: 'doughnut',
+      data: { 
+        labels:[#{formatOnly}],
+        datasets: [{
+            label: 'resources',
+            data:[#{countFormatOnly}],
+            backgroundColor: [
+                'rgba(159,32,76, 1)',
+                'rgba(197,68,113,1)',
+                'rgba(204,102,138, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(152,152,154, 1)',
+                'rgba(181,181,184,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(15,18,136,0.3)',
+                'rgba(15,18,136, 0.7)',
+                'rgba(15,18,136,1)' ]
+                }] 
+            },
+      options: {}
+      });
+   
+
+  section.row.graph
+    p(class='col-lg-8 sentence') the scale of aggregators of resources (such as catalogues, digital libraries, repositories, and digital editions) may vary significantly
+    canvas(id='scale', class="col-lg-12 col-centered")
+    script.
+      var polar = document.getElementById("scale");
+      var myChart = new Chart(polar, {
+      type: 'polarArea',
+      data: { 
+        labels:[!{scaleOnly}],
+        datasets: [{
+            label: 'resources',
+            data:[#{countScaleOnly}],
+            backgroundColor: [
+                'rgba(159,32,76, 1)',
+                'rgba(197,68,113,1)',
+                'rgba(204,102,138, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(152,152,154, 1)',
+                'rgba(181,181,184,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(15,18,136,0.3)',
+                'rgba(15,18,136, 0.7)',
+                'rgba(15,18,136,1)' ]
+                }] 
+            },
+      options: {}
+      });
+   
+
+
+  section.row.graph.back-img
+    p(class='col-lg-6 sentence') in order to reuse such resources, several open licenses are available - even if most of the providers do not specify it clearly 
+    p.row.tags 
+      for y,j in resourcesLicense
+        span(class='white tag')
+          span=y.LICENSE
+          span  (
+            span=y.NUMBER 
+          span )
+
+  h3 
+    a(data-toggle="collapse", data-target="#toc_resources", aria-expanded="false", aria-controls="toc_resources", class="info_collapse glyphicon glyphicon-info-sign") resources by name
+  section(id="toc_resources", class="collapse")
+    for x,i in resourcesList
+      section(class='list', class=x.NAME.charAt(0).toUpperCase())
+        a(href=x.URI data-toggle="collapse", data-target='#'+x.ID, aria-expanded="false", aria-controls="toc_resources", class="group info_collapse glyphicon glyphicon-info-sign")= x.NAME
+        p(id=x.ID, class="collapse")=x.DESC
+
+    

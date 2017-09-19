@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/css/bootstrap.min.css')
+    script(src='https://code.jquery.com/jquery-3.1.1.min.js')
+    script(src='http://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
+    script(src='/javascripts/js/bootstrap.min.js')
+    script(src='/javascripts/js/musow.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js')
+  body.container-fluid
+    nav.menu.row
+        ul.col-lg-12
+          li
+            a(href='./') musoW
+          li
+            a(href='/browse') BROWSE
+          li
+            a(href='/explore') EXPLORE
+          li
+            a(href='/contribute') CONTRIBUTE
+    header.row.others
+      h1.col-lg-12= title
+      h2.col-lg-12 musical data on the web
+      
+    section(class='main-content')
+      block content
+    footer.col-md-3
+      h3 contact
+      p on <a href='https://github.com/enridaga/musow'>github</a>
