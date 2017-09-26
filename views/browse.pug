@@ -10,7 +10,7 @@ block content
         p=x.TYPE
  
   section.row.graph.back-img
-    p(class='col-lg-5 sentence right') that deal with symbolic notated music (sheets), descriptive metadata (e.g. artists, genres, cataloguing information), and audio files
+    p(class='col-lg-5 sentence right') which deal with symbolic notated music (sheets), descriptive metadata (e.g. artists, genres, cataloguing information), and audio files
     for y,j in resourcesSubject
       section(class='square pink col-lg-2')
         h2=y.NUMBER
@@ -112,7 +112,7 @@ block content
       options: {}
       });
   
-  section.row.graph.back-img
+  section.row.graph.back-img.justify-content-center
     p(class='col-lg-4 sentence') aggregators gather such resources by genre, artist, period or country
     p.col-lg-8 
       for y,j in resourcesTopic
@@ -150,7 +150,7 @@ block content
   
   section.row.graph
     p(class='col-lg-6 sentence') in order to reuse such resources, several open licenses are available - even if most of the providers do not specify it clearly 
-    section.row.tags 
+    section.row.tags.justify-content-center 
       for y,j in resourcesLicense
         span(class='pink tag')
           span=y.LICENSE

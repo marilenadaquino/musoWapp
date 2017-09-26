@@ -1,11 +1,135 @@
 extends layout2
 
 block content
-  section.row.graph
-    h3.col-lg-12 
-      a(data-toggle="collapse", data-target="#toc_resources", aria-expanded="false", aria-controls="toc_resources", class="info_collapse glyphicon glyphicon-info-sign") resources by name
-    section(id="toc_resources", class="collapse")
+  section.graph
+    h3.col-lg-12.square.pink-border 
+      a(data-toggle="collapse", data-target="#toc_resources", aria-expanded="false", aria-controls="toc_resources", class="info_title info_collapse") resources by name
+
+    section(id="toc_resources", class="collapse col-lg-12")
+      section(class='alphabet col-lg-10 row', id="alphabet")
+      
       for x,i in resourcesList
-        section(class='list col-lg-12', class=x.NAME.charAt(0).toUpperCase())
-          a(href=x.URI data-toggle="collapse", data-target='#'+x.ID, aria-expanded="false", aria-controls="toc_resources", class="group info_collapse glyphicon glyphicon-info-sign")= x.NAME
-          p(id=x.ID, class="collapse")=x.DESC
+        section(class='list', class=x.NAME.charAt(0).toUpperCase())
+          a(href=x.URI, data-toggle="collapse", data-target='#'+x.ID, aria-expanded="false", aria-controls=x.ID, class="group col-lg-12 resource_collapse row")= x.NAME
+          section(id=x.ID, class="collapse resource_desc")
+            section.col-lg-2.justify-content-center
+                i(class='fa fa-diamond', aria-hidden='true')
+                h4 RDF
+                p
+                  a(href=x.URI) data.open.ac.uk
+            section.col-lg-2
+                i(class='fa fa-cube', aria-hidden='true')
+                h4 TYPE
+                p=x.TYPE
+            section.col-lg-3
+                i(class='fa fa-home', aria-hidden='true')
+                h4 HOMEPAGE
+                p visit the <a href=x.HOMEPAGE>homepage</a> of the project 
+            section.col-lg-2
+                i(class='fa fa-clone', aria-hidden='true')
+                h4 EXTENT
+                p #{x.EXTENT} items
+            section.col-lg-2
+                i(class='fa fa-unlock-alt', aria-hidden='true')
+                h4 LICENSE
+                p=x.LICENSE
+             
+            section.col-lg-12.no-border
+                i(class='fa fa-info-circle', aria-hidden='true')
+                h4 ABOUT
+                p=x.DESC
+            section.col-lg-4
+                i(class='fa fa-star', aria-hidden='true')
+                h4 SCOPE
+                p items are gathered by
+                span.punctuation  
+                for y,z in x.SCOPE
+                  p  #{y.value}
+                  if z < x.SCOPE.length -1
+                    span.punctuation ,
+            section.col-lg-3
+                i(class='fa fa-users', aria-hidden='true')
+                h4 AUDIENCE
+                for y,z in x.AUDIENCE
+                  p #{y.value}
+                  if z < x.AUDIENCE.length -1
+                    span.punctuation ;     
+            section.col-lg-4
+                i(class='fa fa-music', aria-hidden='true')
+                h4 MUSIC FEATURES
+                p for each item is described
+                span.punctuation  
+                for y,z in x.MUSICFEATURE
+                  p  #{y.value}
+                  if z < x.MUSICFEATURE.length -1
+                    span.punctuation , 
+           
+            
+
+    h3.col-lg-12.square.pink-border
+      a(data-toggle="collapse", data-target="#toc_resources2", aria-expanded="false", aria-controls="toc_resources2", class="info_title info_collapse") resources by type
+
+    section(id="toc_resources2", class="collapse col-lg-12")
+      section(class='alphabet col-lg-10 row')
+        for x,i in resourcesCount
+          span
+            a(href=x.URI, data-toggle="collapse", data-target='#'+x.TYPE.replace(" ", "-"), aria-expanded="false", aria-controls=x.TYPE, class="resource_collapse row") #{x.TYPE} (#{x.NUMBER})
+      each x,i in resourcesCount
+        section(id=x.TYPE.replace(" ", "-"), class='collapse col-lg-12')
+            each y,i in resourcesList
+              if( String(x.TYPE).valueOf() == String(y.TYPE).valueOf() )
+ 
+                a(href=y.URI, data-toggle="collapse", data-target='#type'+y.ID, aria-expanded="false", aria-controls='type'+y.ID, class="group col-lg-12 resource_collapse row") #{y.NAME}
+                section(id='type'+y.ID, class="collapse resource_desc")
+                  section.col-lg-2.justify-content-center
+                    i(class='fa fa-diamond', aria-hidden='true')
+                    h4 RDF
+                    p
+                      a(href=y.URI) data.open.ac.uk
+                  section.col-lg-2
+                    i(class='fa fa-cube', aria-hidden='true')
+                    h4 TYPE
+                    p=y.TYPE
+                  section.col-lg-3
+                    i(class='fa fa-home', aria-hidden='true')
+                    h4 HOMEPAGE
+                    p visit the <a href=y.HOMEPAGE>homepage</a> of the project 
+                  section.col-lg-2
+                    i(class='fa fa-clone', aria-hidden='true')
+                    h4 EXTENT
+                    p #{y.EXTENT} items
+                  section.col-lg-2
+                    i(class='fa fa-unlock-alt', aria-hidden='true')
+                    h4 LICENSE
+                    p=y.LICENSE
+             
+                  section.col-lg-12.no-border
+                    i(class='fa fa-info-circle', aria-hidden='true')
+                    h4 ABOUT
+                    p=y.DESC
+                  section.col-lg-4
+                    i(class='fa fa-star', aria-hidden='true')
+                    h4 SCOPE
+                    p items are gathered by
+                    span.punctuation  
+                    for k,z in y.SCOPE
+                      p  #{k.value}
+                      if z < y.SCOPE.length -1
+                        span.punctuation ,
+                  section.col-lg-3
+                    i(class='fa fa-users', aria-hidden='true')
+                    h4 AUDIENCE
+                    for k,z in y.AUDIENCE
+                      p #{k.value}
+                      if z < y.AUDIENCE.length -1
+                        span.punctuation ;     
+                  section.col-lg-4
+                    i(class='fa fa-music', aria-hidden='true')
+                    h4 MUSIC FEATURES
+                    p for each item is described
+                    span.punctuation  
+                    for k,z in y.MUSICFEATURE
+                      p  #{k.value}
+                      if z < y.MUSICFEATURE.length -1
+                        span.punctuation , 
+              

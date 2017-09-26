@@ -6,6 +6,7 @@ body {
 	color: #0d107a !important;
 	font-size: 1.4em;
 	padding: 0px !important;
+	background-color: whitesmoke !important;
 }
 header {z-index: 10000;
 	padding: 5em !important;}
@@ -59,13 +60,6 @@ header {z-index: 10000;
 .menu li:first-of-type {float: left;}
 .dropdown-menu {border: none !important; background-color: rgb(204,142,164) !important;}
 .dropdown-menu a {padding: 0.5em; display: block;}
-#intro, #browse, #explore, #contribute, footer {z-index: 10000; padding: 3em 1em;}
-#intro a, #browse a, #explore a, #contribute a {color: #fff; display: inline-block; background-color: #0d107a; padding: 0.3em;}
-#intro, #explore {margin-right: 10em; padding-left: 1em;}
-#intro {margin-top: -9em;}
-#explore {margin-top: -4em;}
-#browse, #contribute {padding: 3em 0px; margin-left: 13em;}
-
 
 h1 {font-size: 4em !important; z-index: 10000; padding-left: 2em !important;}
 h2 {font-size: 1.5em !important; padding-left: 7em !important; margin-top: -15px; z-index: 10000; }
@@ -73,9 +67,16 @@ h2,h3 {text-transform: uppercase; letter-spacing: 0.05em;}
 h3 {font-size: 1em !important; font-weight: 700 !important;}
 p, .sentence {font-size: 1.1em; line-height: 1.4em;}
 *[data-toggle] {cursor: pointer;}
-/*.center section {margin: 0 auto;}
-*/
 
+/* home */
+#intro, #browse, #explore, #contribute, footer {z-index: 10000; padding: 3em 1em;}
+#intro a, #browse a, #explore a, #contribute a {color: #fff; display: inline-block; background-color: #0d107a; padding: 0.3em;}
+#intro, #explore {margin-right: 10em; padding-left: 1em;}
+#intro {margin-top: -9em;}
+#explore {margin-top: -4em;}
+#browse, #contribute {padding: 3em 0px; margin-left: 13em;}
+
+/* browse > summary */
 .graph {margin: 0px; padding: 8em 2em;}
 .back-img {
 	background-image: url('../images/pink-vinyl.jpg');
@@ -108,12 +109,31 @@ p, .sentence {font-size: 1.1em; line-height: 1.4em;}
 .bookmark span:nth-of-type(1) {font-size: 3em;  padding-bottom: 0.3em;}
 .bookmark i {font-size: 9em;}
 
-footer {
+/* browse > resources */
+.info_title:hover {color: rgb(204,142,164) !important;}
+.alphabet {margin: 2em 0px;}
+.alphabet span {background-color: rgb(204,142,164); color: #fff; font-size: 1.3em; padding: 0.5em; margin: 0.2em;}
+.alphabet span:hover {background-color: rgb(171,60,100);}
+#toc_resources {margin: 2em;}
+#toc_resources2 .alphabet span {padding: 0.5em 1em !important; font-weight: 400;}
+.list {margin: 1em;}
+.group {color: #0d107a !important; text-decoration: none; padding-bottom: 0.5em;}
+.group:before {content: '>> '; color: rgb(204,142,164);}
+a.group:hover, a.group:active {color: rgb(204,142,164) !important; text-decoration: none;}
+.resource_desc section {padding: 1em !important;}
+.resource_desc h4 {font-size: 1.5em; font-weight: 700; letter-spacing: 0.05em; margin: 0.5em 0; display:block; }
+.resource_desc i {font-size: 2em !important;}
+.resource_desc * {display: inline-block;}
+.resource_desc section {border-right: solid 2px #0d107a; height: 100%; }
+.no-border {border: none !important; }
+.pink-border { border: solid 2px rgb(204,142,164); background-color: whitesmoke;}
+.punctuation {margin-right: 0.2em;}
+footer.layout2 {
 	background-color: rgb(204,142,164);
 	color: #fff;
 }
 
-footer section {padding: 3em;}
+footer section {padding: 3em; margin-top: 1em;}
 @media only screen and (max-width: 64em) { 
 	h1 {font-size: 5rem !important; padding-left: 1em !important;}
 	h2 {font-size: 3rem !important; padding-left: 4em !important;}
@@ -124,3 +144,4 @@ footer section {padding: 3em;}
 @media (min-width: 992px) and (max-width: 64em) {
 .col-lg-3 { max-width: 80% !important;}
 }
+
