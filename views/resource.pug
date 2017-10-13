@@ -1,0 +1,88 @@
+extends layout2
+
+block content
+	section.graph
+		section(id=x.ID, class="resource_desc")
+			section.col-lg-12.no-border
+				i(class='fa fa-info-circle', aria-hidden='true')
+				h4 ABOUT
+				p=x.DESC
+			section.col-lg-2.justify-content-center
+				i(class='fa fa-diamond', aria-hidden='true')
+				h4 RDF
+				p
+					a(href=x.URI) data.open.ac.uk
+			section.col-lg-2
+				i(class='fa fa-cube', aria-hidden='true')
+				h4 TYPE
+				p=x.TYPE
+			section.col-lg-3
+				i(class='fa fa-home', aria-hidden='true')
+				h4 HOMEPAGE
+				p visit the <a href=x.HOMEPAGE>homepage</a> of the project
+			section.col-lg-2
+				i(class='fa fa-clone', aria-hidden='true')
+				h4 EXTENT
+				p #{x.EXTENT} items
+			section.col-lg-2
+				i(class='fa fa-unlock-alt', aria-hidden='true')
+				h4 LICENSE
+				p=x.LICENSE
+			section.col-lg-2
+				i(class='fa fa-file', aria-hidden='true')
+				h4 SUBJECT
+				p=x.SUBJECT
+			if x.TASK
+				section.col-lg-9
+					i(class='fa fa-tasks', aria-hidden='true')
+					h4 TASKS
+					p resources are meant to be reused for purposes or in situations such as: 
+					span.punctuation
+					for y,z in x.TASK
+						p  #{y.value}
+						if z < x.TASK.length -1
+							span.punctuation ,
+			if x.SCOPE
+				section.col-lg-4
+					i(class='fa fa-star', aria-hidden='true')
+					h4 SCOPE
+					p items are gathered by
+					span.punctuation
+					for y,z in x.SCOPE
+						p  #{y.value}
+						if z < x.SCOPE.length -1
+							span.punctuation ,
+					if x.SCOPE.length > 1
+						span.punctuation
+						span criteria
+					else
+						span.punctuation
+						span criterion
+			if x.AUDIENCE
+				section.col-lg-3
+					i(class='fa fa-users', aria-hidden='true')
+					h4 AUDIENCE
+					for y,z in x.AUDIENCE
+						p #{y.value}
+						if z < x.AUDIENCE.length -1
+							span.punctuation ,
+			if x.MUSICFEATURE
+				section.col-lg-4
+					i(class='fa fa-music', aria-hidden='true')
+					h4 MUSIC FEATURES
+					p for each item is described:
+					span.punctuation
+					for y,z in x.MUSICFEATURE
+						p  #{y.value}
+						if z < x.MUSICFEATURE.length -1
+							span.punctuation , 
+			if x.SERVICE
+				section.col-lg-12.no-border
+					i(class='fa fa-television', aria-hidden='true')
+					h4 FEATURES AND SERVICES
+					p the resource provides:
+					span.punctuation
+					for y,z in x.SERVICE
+						p  #{y.value}
+						if z < x.SERVICE.length -1
+							span.punctuation , 

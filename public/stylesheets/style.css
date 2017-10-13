@@ -108,19 +108,24 @@ p, .sentence {font-size: 1.1em; line-height: 1.4em;}
 .bookmark span {display: block; text-align: center;}
 .bookmark span:nth-of-type(1) {font-size: 3em;  padding-bottom: 0.3em;}
 .bookmark i {font-size: 9em;}
-
+.type {color: #0d107a !important;}
+.type:hover, .type:active {text-decoration: none !important; color: rgb(204,142,164) !important;}
 /* browse > resources */
+.drop {display: inline-block;}
 .info_title:hover {color: rgb(204,142,164) !important;}
 .alphabet {margin: 2em 0px;}
 .alphabet span {background-color: rgb(204,142,164); color: #fff; font-size: 1.3em; padding: 0.5em; margin: 0.2em;}
 .alphabet span:hover {background-color: rgb(171,60,100);}
 #toc_resources {margin: 2em;}
-#toc_resources2 .alphabet span {padding: 0.5em 1em !important; font-weight: 400;}
-.list {margin: 1em;}
-.group {color: #0d107a !important; text-decoration: none; padding-bottom: 0.5em;}
-.group:before {content: '>> '; color: rgb(204,142,164);}
-a.group:hover, a.group:active {color: rgb(204,142,164) !important; text-decoration: none;}
-.resource_desc section {padding: 1em !important;}
+#toc_resources2 .alphabet span, #toc_resources3 .alphabet span {padding: 0.5em 1em !important; font-weight: 400;}
+section.list i, section.list a {display: inline-block; padding-right: 0.2em;}
+section.list i:hover {color: rgb(204,142,164) !important;}
+.group {color: #0d107a !important; padding-bottom: 0.5em; margin: 0.5em 0em !important; font-size: 1.7em; text-decoration: none !important; text-align: center;}
+.group:before {color: rgb(204,142,164);}
+a.group:hover, a.group:active, {color: rgb(204,142,164) !important; text-decoration: none !important;}
+span.active {background-color: rgb(171,60,100) !important; padding: 0.2em;}
+.group i {padding-right: 0.5em;}
+.resource_desc section {padding: 1em !important; margin-bottom: 2em;}
 .resource_desc h4 {font-size: 1.5em; font-weight: 700; letter-spacing: 0.05em; margin: 0.5em 0; display:block; }
 .resource_desc i {font-size: 2em !important;}
 .resource_desc * {display: inline-block;}
@@ -128,6 +133,9 @@ a.group:hover, a.group:active {color: rgb(204,142,164) !important; text-decorati
 .no-border {border: none !important; }
 .pink-border { border: solid 2px rgb(204,142,164); background-color: whitesmoke;}
 .punctuation {margin-right: 0.2em;}
+
+.secondH1 {margin-bottom: 1em !important;}
+
 footer.layout2 {
 	background-color: rgb(204,142,164);
 	color: #fff;
