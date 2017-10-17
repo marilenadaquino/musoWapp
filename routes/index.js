@@ -5,6 +5,7 @@ var rdf = require('rdflib');
 var SparqlClient = require('sparql-client-2');
 var uuidv4 = require('uuid/v4');
 
+
 // namespaces
 var RDF = rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 var RDFS = rdf.Namespace("http://www.w3.org/2000/01/rdf-schema#")
@@ -31,7 +32,7 @@ var resourcesCount = [];
 var resourcesSubject = [];
 var resourcesAudience =[]; var audienceOnly = []; var countAudienceOnly = [];
 var resourcesFormat = []; var formatOnly = []; var countFormatOnly = [];
-var resourcesLicense = [];
+var resourcesLicense = []; var licenseOnly = []; var countLicenseOnly = [];
 var resourcesScale = []; var scaleOnly = []; var countScaleOnly = [];
 // var resourcesScopeAndType = [];
 var resourcesTopic = [];
@@ -121,6 +122,8 @@ client.query(queryCountLicense).execute()
 				"LICENSE": results.results.bindings[i].licenseLabel.value,
 				"NUMBER": results.results.bindings[i].count.value
 			});
+			licenseOnly.push("'"+results.results.bindings[i].licenseLabel.value.replace(/ /g,'-')+"'");
+			countLicenseOnly.push(results.results.bindings[i].count.value);
 		};
 	}).catch(function (error) {
 		console.log('ops, something went wrong')
@@ -172,27 +175,6 @@ client.query(queryCountFeature).execute()
 		console.log('ops, something went wrong')
 	});
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'musoW' });
-});
-
-router.get('/browse', function(req, res, next) {
-  res.render('browse', { title: 'browse' , resourcesList , 
-  							resourcesCount , 
-  							resourcesSubject, 
-  							resourcesAudience , 
-  							audienceOnly , 
-  							countAudienceOnly , 
-  							formatOnly , 
-  							countFormatOnly ,
-  							resourcesLicense ,
-  							scaleOnly ,
-  							countScaleOnly ,
-  							resourcesTopic ,
-  							featureOnly ,
-  							countFeatureOnly });
-});
 
 // resources.pug
 // List of resources by name
@@ -259,17 +241,45 @@ client.query(queryByName).execute({format: {resource: 'uri'}})
 		console.log('ops, something went wrong - queryByName')
 	});
 
+
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'musoW' });
+});
+
+router.get('/browse', function(req, res, next) {
+  res.render('browse', { title: 'browse' , resourcesList , 
+  							resourcesCount , 
+  							resourcesSubject, 
+  							resourcesAudience , 
+  							audienceOnly , 
+  							countAudienceOnly , 
+  							formatOnly , 
+  							countFormatOnly ,
+  							resourcesLicense ,
+  							scaleOnly ,
+  							countScaleOnly ,
+  							resourcesTopic ,
+  							featureOnly ,
+  							countFeatureOnly,
+  							licenseOnly,
+  							countLicenseOnly });
+});
+
 router.get('/resources', function(req, res, next) {
 	console.log(resourcesList);
-  res.render('resources', { title: 'resources', resourcesList , resourcesCount, resourcesSubject});
+  res.render('resources', { title: 'resources by name', resourcesList , resourcesCount, resourcesSubject});
 });
 
-router.get('/explore', function(req, res, next) {
-  res.render('explore', { title: 'explore' });
+router.get('/resources-type', function(req, res, next) {
+	console.log(resourcesList);
+  res.render('resources-type', { title: 'resources by type', resourcesList , resourcesCount, resourcesSubject});
 });
 
-router.get('/contribute', function(req, res, next) {
-  res.render('contribute', { title: 'contribute to' });
+router.get('/resources-subject', function(req, res, next) {
+	console.log(resourcesList);
+  res.render('resources-subject', { title: 'resources by subject', resourcesList , resourcesCount, resourcesSubject});
 });
 
 router.get('/resources/:id', function(req, res, next) {
@@ -279,4 +289,16 @@ router.get('/resources/:id', function(req, res, next) {
 	res.render('resource', { title: x.NAME, resourcesList, id, x});
 });
 
+// other pages
+// explore.pug TBD
+router.get('/explore', function(req, res, next) {
+  res.render('explore', { title: 'explore' });
+});
+
+// contribute.pug
+router.get('/contribute', function(req, res, next) {
+  res.render('contribute', { title: 'contribute to' });
+});
 module.exports = router;
+
+

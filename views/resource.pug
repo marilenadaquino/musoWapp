@@ -1,12 +1,13 @@
 extends layout2
 
 block content
+	section.col-lg-12.no-border.desc
+		i(class='fa fa-info-circle', aria-hidden='true')
+		h4 ABOUT
+		p=x.DESC
 	section.graph
 		section(id=x.ID, class="resource_desc")
-			section.col-lg-12.no-border
-				i(class='fa fa-info-circle', aria-hidden='true')
-				h4 ABOUT
-				p=x.DESC
+			
 			section.col-lg-2.justify-content-center
 				i(class='fa fa-diamond', aria-hidden='true')
 				h4 RDF
@@ -85,4 +86,11 @@ block content
 					for y,z in x.SERVICE
 						p  #{y.value}
 						if z < x.SERVICE.length -1
-							span.punctuation , 
+							span.punctuation ,
+	section.social.no-border.desc
+				a(href="https://twitter.com/home?status=I%20found%20this%20interesting%20project%20"+encodeURIComponent(x.HOMEPAGE)+"%20in%20musoW%20catalogue") 
+					i.fa.fa-twitter
+				a(href="https://plus.google.com/share?url="+encodeURIComponent(x.HOMEPAGE))
+					i.fa.fa-google-plus
+				a(href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(x.HOMEPAGE))
+					i.fa.fa-facebook

@@ -70,14 +70,14 @@ p, .sentence {font-size: 1.1em; line-height: 1.4em;}
 
 /* home */
 #intro, #browse, #explore, #contribute, footer {z-index: 10000; padding: 3em 1em;}
-#intro a, #browse a, #explore a, #contribute a {color: #fff; display: inline-block; background-color: #0d107a; padding: 0.3em;}
+#intro h3 a, #browse h3 a, #explore h3 a, #contribute h3 a {color: #fff; display: inline-block; background-color: #0d107a; padding: 0.3em;}
 #intro, #explore {margin-right: 10em; padding-left: 1em;}
 #intro {margin-top: -9em;}
 #explore {margin-top: -4em;}
 #browse, #contribute {padding: 3em 0px; margin-left: 13em;}
 
 /* browse > summary */
-.graph {margin: 0px; padding: 8em 2em;}
+.graph {margin: 0px; padding: 5em 2em;}
 .back-img {
 	background-image: url('../images/pink-vinyl.jpg');
 	background-attachment: fixed;
@@ -110,30 +110,58 @@ p, .sentence {font-size: 1.1em; line-height: 1.4em;}
 .bookmark i {font-size: 9em;}
 .type {color: #0d107a !important;}
 .type:hover, .type:active {text-decoration: none !important; color: rgb(204,142,164) !important;}
+.type-white {color: #fff !important;}
+.type-white:hover, .type-white:active {text-decoration: none !important; color: #0d107a !important;}
+
+
 /* browse > resources */
 .drop {display: inline-block;}
 .info_title:hover {color: rgb(204,142,164) !important;}
 .alphabet {margin: 2em 0px;}
 .alphabet span {background-color: rgb(204,142,164); color: #fff; font-size: 1.3em; padding: 0.5em; margin: 0.2em;}
+.alphabet span i {text-align: center; padding: 0.3em;}
 .alphabet span:hover {background-color: rgb(171,60,100);}
 #toc_resources {margin: 2em;}
-#toc_resources2 .alphabet span, #toc_resources3 .alphabet span {padding: 0.5em 1em !important; font-weight: 400;}
-section.list i, section.list a {display: inline-block; padding-right: 0.2em;}
-section.list i:hover {color: rgb(204,142,164) !important;}
-.group {color: #0d107a !important; padding-bottom: 0.5em; margin: 0.5em 0em !important; font-size: 1.7em; text-decoration: none !important; text-align: center;}
-.group:before {color: rgb(204,142,164);}
-a.group:hover, a.group:active, {color: rgb(204,142,164) !important; text-decoration: none !important;}
+#toc_resources2 .alphabet span, #toc_resources3 .alphabet span {padding: 0.5em 1.2em !important; font-weight: 400; text-align: center;}
+section.list a {display: inline-block; padding-right: 0.2em;}
+.group {color: #0d107a; font-size: 1.7em; margin: 0.2em auto; padding: 0.7em; }
+.list i {font-size: 1.7em; display: inline-flex; padding-right: 0.5em; width: 3em; }
+.group i {display: inline-flex; padding-right: 0.5em; width: 3em; }
+.group:hover, .group:active {color: #0d107a; text-decoration: none;}
+.count {font-style: italic; margin-left: 3em;}
+.group:before {
+  content: "" !important;
+  position: absolute !important;
+  width: 100%;
+  height: 2px !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  background-color: rgb(204,142,164) !important;
+  visibility: hidden !important;
+  -webkit-transform: scaleX(0) !important;
+  transform: scaleX(0) !important;
+  -webkit-transition: all 0.3s ease-in-out 0s !important;
+  transition: all 0.3s ease-in-out 0s !important;
+}
+.group:hover:before {
+  visibility: visible !important;
+  -webkit-transform: scaleX(1) !important;
+  transform: scaleX(1) !important;
+}
 span.active {background-color: rgb(171,60,100) !important; padding: 0.2em;}
-.group i {padding-right: 0.5em;}
+.alphaActive {background-color: rgb(171,60,100) !important;}
 .resource_desc section {padding: 1em !important; margin-bottom: 2em;}
 .resource_desc h4 {font-size: 1.5em; font-weight: 700; letter-spacing: 0.05em; margin: 0.5em 0; display:block; }
 .resource_desc i {font-size: 2em !important;}
-.resource_desc * {display: inline-block;}
+.resource_desc * , .inline {display: inline-block;}
 .resource_desc section {border-right: solid 2px #0d107a; height: 100%; }
-.no-border {border: none !important; }
+.no-border {border: none !important;}
+.desc {padding: 3em !important; background-color: lightgrey;}
+.desc i {font-size: 1.7em;}
 .pink-border { border: solid 2px rgb(204,142,164); background-color: whitesmoke;}
 .punctuation {margin-right: 0.2em;}
 
+.social a {font-size: 1.2em; padding: 1em;}
 .secondH1 {margin-bottom: 1em !important;}
 
 footer.layout2 {

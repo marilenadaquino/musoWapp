@@ -6,7 +6,7 @@ block content
     p(class='col-lg-2 sentence right') we collected information about several kind of resources
     for x,i in resourcesCount
       section(class='square col-lg-2')
-       a(href='./resources#'+ x.TYPE.replace(" ", "-") +'-div', target="_blank", class='type')
+       a(href='./resources-type#'+ x.TYPE.replace(" ", "-") +'-div', target="_blank", class='type', style="text-decoration: none")
         h2=x.NUMBER
         p=x.TYPE
  
@@ -14,6 +14,7 @@ block content
     p(class='col-lg-5 sentence right') which deal with symbolic notated music (sheets), descriptive metadata (e.g. artists, genres, cataloguing information), and audio files
     for y,j in resourcesSubject
       section(class='square pink col-lg-2')
+       a(href='./resources-subject#'+ y.TYPE +'-div', target="_blank", class='type-white', style="text-decoration: none")
         h2=y.NUMBER
         p=y.TYPE
   
@@ -150,11 +151,36 @@ block content
       });
   
   section.row.graph
-    p(class='col-lg-6 sentence') in order to reuse such resources, several open licenses are available - even if most of the providers do not specify it clearly 
-    section.row.tags.justify-content-center 
-      for y,j in resourcesLicense
-        span(class='pink tag')
-          span=y.LICENSE
-          span  (
-            span=y.NUMBER 
-          span )    
+    section.row.graph 
+    canvas(id='license', class="col-lg-7")
+    script.
+      var doughnut = document.getElementById("license");
+      var myChart = new Chart(doughnut, {
+      type: 'doughnut',
+      data: { 
+        labels:[#{licenseOnly}],
+        datasets: [{
+            label: 'resources',
+            data:[#{countLicenseOnly}],
+            backgroundColor: [
+                'rgba(159,32,76, 1)',
+                'rgba(197,68,113,1)',
+                'rgba(204,102,138, 1)',
+                'rgba(204,142,164,1)',
+                'rgba(152,152,154, 1)',
+                'rgba(181,181,184,1)',
+                'rgba(222,222,224, 1)',
+                'rgba(15,18,136,0.3)',
+                'rgba(15,18,136, 0.7)',
+                'rgba(15,18,136,1)',
+                'rgba(6,8,88,1)',
+                'rgba(46,6,88,1)',
+                'rgba(72,9,137,1)',
+                'rgba(100,18,184,1)',
+                'rgba(153,74,234,1)',
+                'rgba(184,135,234,1)' ]
+                }] 
+            },
+      options: {}
+      });
+    p(class='col-lg-3 sentence left') in order to reuse such resources, several open licenses are available - even if most of the providers do not specify it clearly 

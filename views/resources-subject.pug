@@ -1,0 +1,43 @@
+extends layout2
+
+block content
+  section.graph
+    section(id="toc_resources3", class="col-lg-12")
+      section(class='alphabet col-lg-12 row justify-content-center')
+        for x in resourcesSubject
+          span(id=x.TYPE+'-div')
+            a(href=x.URI, data-toggle="collapse", data-target='#'+x.TYPE, aria-expanded="false", aria-controls=x.TYPE, class="resource_collapse row") #{x.TYPE}
+      section(class='accordion-group')
+        each x,i in resourcesSubject
+          section(id=x.TYPE, class='collapse col-lg-12')
+              h5.col-lg-12.count= x.NUMBER + ' resources'
+              each y,i in resourcesList
+                if( String(x.TYPE).valueOf() == String(y.SUBJECT).valueOf() )
+                  a(href='./resources/'+y.ID, target="_blank", class="hover10 group col-lg-12 resource_collapse row")
+                    if y.TYPE === 'Dataset'
+                      i.fa.fa-bar-chart
+                    else if y.TYPE === 'Repository'
+                      i.fa.fa-database
+                    else if y.TYPE === 'Catalogue'
+                      i.fa.fa-book
+                    else if y.TYPE === 'Digital Library'
+                      i.fa.fa-archive
+                    else if y.TYPE === 'Digital edition'
+                      i.fa.fa-paragraph
+                    else if y.TYPE === 'Software'
+                      i.fa.fa-code-fork
+                    else if y.TYPE === 'Service'
+                      i.fa.fa-cog
+                    else if y.TYPE === 'Ontology'
+                      i.fa.fa-diamond
+                    else if y.TYPE === 'Format'
+                      i.fa.fa-code
+                    else if y.TYPE === 'Project'
+                      i.fa.fa-folder-open
+                    else if y.TYPE === 'Schema'
+                      i.fa.fa-list
+                    span.hover10__label #{y.NAME}
+                  span.col-lg-5
+                    a(href='./resources/'+y.ID, target="_blank") [view record]
+                    a(href=y.URI, target="_blank")  [RDF]
+                    a(href=y.HOMEPAGE, target="_blank")  [homepage]
