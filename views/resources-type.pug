@@ -35,9 +35,33 @@ block content
               h5.col-lg-12.count= x.NUMBER + ' resources'
               each y,i in resourcesList
                 if( String(x.TYPE).valueOf() == String(y.TYPE).valueOf() )
-                  a(href='./resources/'+y.ID, target="_blank", class="group col-lg-12 resource_collapse row") #{y.NAME}
+                  a(href='./resources/'+y.ID, target="_blank", class="group col-lg-12 resource_collapse row")
+                    if y.TYPE === 'Dataset'
+                      i.fa.fa-bar-chart
+                    else if y.TYPE === 'Repository'
+                      i.fa.fa-database
+                    else if y.TYPE === 'Catalogue'
+                      i.fa.fa-book
+                    else if y.TYPE === 'Digital Library'
+                      i.fa.fa-archive
+                    else if y.TYPE === 'Digital edition'
+                      i.fa.fa-paragraph
+                    else if y.TYPE === 'Software'
+                      i.fa.fa-code-fork
+                    else if y.TYPE === 'Service'
+                      i.fa.fa-cog
+                    else if y.TYPE === 'Ontology'
+                      i.fa.fa-diamond
+                    else if y.TYPE === 'Format'
+                      i.fa.fa-code
+                    else if y.TYPE === 'Project'
+                      i.fa.fa-folder-open
+                    else if y.TYPE === 'Schema'
+                      i.fa.fa-list
+                    span #{y.NAME}
+                  p.col-lg-8= y.DESC.replace(/(([^\s]+\s\s*){10})(.*)/,"$1…")
                   p.col-lg-12
-                    a(href='./resources/'+y.ID, target="_blank") [view record]
+                    a(href='./resources/'+y.ID, target="_blank") [see more]
                     a(href=y.URI, target="_blank")  [RDF]
                     a(href=y.HOMEPAGE, target="_blank")  [homepage]
 

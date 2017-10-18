@@ -37,6 +37,7 @@ var resourcesScale = []; var scaleOnly = []; var countScaleOnly = [];
 // var resourcesScopeAndType = [];
 var resourcesTopic = [];
 var resourcesFeature = []; var featureOnly = []; var countFeatureOnly = [];
+var onlyNameAndURI = [];
 
 var client = new SparqlClient(endpoint, {
   defaultParameters: { format: 'json' }
@@ -235,6 +236,11 @@ client.query(queryByName).execute({format: {resource: 'uri'}})
 				"TASK": tasks,
 				"SERVICE": services
 			});
+			onlyNameAndURI.push({
+				"URI": results.results.bindings[i].uri.value,
+				"DESC": descs,
+				"NAME": names
+			});
 		};
 		console.log(resourcesList.length)
 	}).catch(function (error) {
@@ -249,7 +255,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/browse', function(req, res, next) {
-  res.render('browse', { title: 'browse' , resourcesList , 
+  res.render('browse', { title: 'browse' , onlyNameAndURI, resourcesList , 
   							resourcesCount , 
   							resourcesSubject, 
   							resourcesAudience , 
@@ -264,41 +270,42 @@ router.get('/browse', function(req, res, next) {
   							featureOnly ,
   							countFeatureOnly,
   							licenseOnly,
-  							countLicenseOnly });
+  							countLicenseOnly});
 });
 
 router.get('/resources', function(req, res, next) {
 	console.log(resourcesList);
-  res.render('resources', { title: 'resources by name', resourcesList , resourcesCount, resourcesSubject});
+  res.render('resources', { title: 'resources by name', onlyNameAndURI, resourcesList , resourcesCount, resourcesSubject});
 });
 
 router.get('/resources-type', function(req, res, next) {
 	console.log(resourcesList);
-  res.render('resources-type', { title: 'resources by type', resourcesList , resourcesCount, resourcesSubject});
+  res.render('resources-type', { title: 'resources by type', onlyNameAndURI, resourcesList , resourcesCount, resourcesSubject});
 });
 
 router.get('/resources-subject', function(req, res, next) {
 	console.log(resourcesList);
-  res.render('resources-subject', { title: 'resources by subject', resourcesList , resourcesCount, resourcesSubject});
+  res.render('resources-subject', { title: 'resources by subject', onlyNameAndURI, resourcesList , resourcesCount, resourcesSubject});
 });
 
 router.get('/resources/:id', function(req, res, next) {
 	var id = req.params.id;	
 	var x = myfilter(resourcesList, function(item) { // filter the array of objects, return only the selected resource
 		return item.ID == id;}); 
-	res.render('resource', { title: x.NAME, resourcesList, id, x});
+	res.render('resource', { title: x.NAME, resourcesList, id, x, onlyNameAndURI});
 });
 
 // other pages
 // explore.pug TBD
 router.get('/explore', function(req, res, next) {
-  res.render('explore', { title: 'explore' });
+  res.render('explore', { title: 'explore', resourcesList , onlyNameAndURI});
 });
 
 // contribute.pug
 router.get('/contribute', function(req, res, next) {
-  res.render('contribute', { title: 'contribute to' });
+  res.render('contribute', { title: 'contribute to', resourcesList , onlyNameAndURI});
 });
+
 module.exports = router;
 
 

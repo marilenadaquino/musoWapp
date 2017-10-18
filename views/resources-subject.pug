@@ -36,8 +36,9 @@ block content
                       i.fa.fa-folder-open
                     else if y.TYPE === 'Schema'
                       i.fa.fa-list
-                    span.hover10__label #{y.NAME}
-                  span.col-lg-5
+                    span #{y.NAME}
+                  p.col-lg-8= y.DESC.replace(/(([^\s]+\s\s*){10})(.*)/,"$1…")
+                  p.col-lg-12
                     a(href='./resources/'+y.ID, target="_blank") [view record]
                     a(href=y.URI, target="_blank")  [RDF]
                     a(href=y.HOMEPAGE, target="_blank")  [homepage]

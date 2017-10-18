@@ -30,8 +30,9 @@ block content
           else if x.TYPE === 'Schema'
             i.fa.fa-list
           a(href='./resources/'+x.ID, target="_blank", class="group col-lg-10 resource_collapse row")= x.NAME
+          p.col-lg-8= x.DESC.replace(/(([^\s]+\s\s*){10})(.*)/,"$1…")
           p.col-lg-12
-            a(href='./resources/'+x.ID, target="_blank") [view record]
+            a(href='./resources/'+x.ID, target="_blank") [see more]
             a(href=x.URI, target="_blank")  [RDF]
             a(href=x.HOMEPAGE, target="_blank")  [homepage]
 

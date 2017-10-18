@@ -1,5 +1,6 @@
 
 $(document).ready(function() {
+
 	// display the alphabet and group/sort by alphabetical letter
     $('.list').each(function () {
         var letter = $('a', this).text().toUpperCase().charAt(0);
@@ -49,7 +50,6 @@ $(document).ready(function() {
         alphaLabel.addClass('alphaActive');
     });
 
-    
 
     
 });
