@@ -22,9 +22,14 @@ block content
 				h4 HOMEPAGE
 				p visit the <a href=#{x.HOMEPAGE}>homepage</a> of the project
 			section.col-lg-2
-				i(class='fa fa-clone', aria-hidden='true')
-				h4 EXTENT
-				p #{x.EXTENT} items
+				if x.TYPE != 'Service', x.TYPE != 'Software'
+					i(class='fa fa-clone', aria-hidden='true')
+					h4 EXTENT
+					p #{x.EXTENT} items
+				else
+					i(class='fa fa-clone', aria-hidden='true')
+					h4 EXTENT
+					p not applicable
 			section.col-lg-2
 				i(class='fa fa-unlock-alt', aria-hidden='true')
 				h4 LICENSE
@@ -45,20 +50,25 @@ block content
 							span.punctuation ,
 			if x.SCOPE
 				section.col-lg-4
-					i(class='fa fa-star', aria-hidden='true')
-					h4 SCOPE
-					p items are gathered by
-					span.punctuation
-					for y,z in x.SCOPE
-						p  #{y.value}
-						if z < x.SCOPE.length -1
-							span.punctuation ,
-					if x.SCOPE.length > 1
+					if x.TYPE != 'Service', x.TYPE != 'Software'
+						i(class='fa fa-star', aria-hidden='true')
+						h4 SCOPE
+						p items are gathered by
 						span.punctuation
-						span criteria
+						for y,z in x.SCOPE
+							p  #{y.value}
+							if z < x.SCOPE.length -1
+								span.punctuation ,
+						if x.SCOPE.length > 1
+							span.punctuation
+							span criteria
+						else
+							span.punctuation
+							span criterion
 					else
-						span.punctuation
-						span criterion
+						i(class='fa fa-star', aria-hidden='true')
+						h4 SCOPE
+						p not applicable
 			if x.AUDIENCE
 				section.col-lg-3
 					i(class='fa fa-users', aria-hidden='true')
