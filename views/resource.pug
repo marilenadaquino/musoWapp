@@ -22,14 +22,18 @@ block content
 				h4 HOMEPAGE
 				p visit the <a href=#{x.HOMEPAGE}>homepage</a> of the project
 			section.col-lg-2
-				if x.TYPE != 'Service', x.TYPE != 'Software'
-					i(class='fa fa-clone', aria-hidden='true')
-					h4 EXTENT
-					p #{x.EXTENT} items
-				else
+				if x.TYPE = 'Service'
 					i(class='fa fa-clone', aria-hidden='true')
 					h4 EXTENT
 					p not applicable
+				else if x.TYPE = 'Software'
+					i(class='fa fa-clone', aria-hidden='true')
+					h4 EXTENT
+					p not applicable
+				else
+					i(class='fa fa-clone', aria-hidden='true')
+					h4 EXTENT
+					p #{x.EXTENT} items
 			section.col-lg-2
 				i(class='fa fa-unlock-alt', aria-hidden='true')
 				h4 LICENSE
@@ -50,7 +54,15 @@ block content
 							span.punctuation ,
 			if x.SCOPE
 				section.col-lg-4
-					if x.TYPE != 'Service', x.TYPE != 'Software'
+					if x.TYPE = 'Service'
+						i(class='fa fa-star', aria-hidden='true')
+						h4 SCOPE
+						p not applicable
+					else if x.TYPE = 'Software'
+						i(class='fa fa-star', aria-hidden='true')
+						h4 SCOPE
+						p not applicable
+					else
 						i(class='fa fa-star', aria-hidden='true')
 						h4 SCOPE
 						p items are gathered by
@@ -65,10 +77,6 @@ block content
 						else
 							span.punctuation
 							span criterion
-					else
-						i(class='fa fa-star', aria-hidden='true')
-						h4 SCOPE
-						p not applicable
 			if x.AUDIENCE
 				section.col-lg-3
 					i(class='fa fa-users', aria-hidden='true')
