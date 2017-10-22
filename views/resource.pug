@@ -7,7 +7,6 @@ block content
 		p=x.DESC
 	section.graph
 		section(id=x.ID, class="resource_desc")
-			
 			section.col-lg-2.justify-content-center
 				i(class='fa fa-diamond', aria-hidden='true')
 				h4 RDF
@@ -16,21 +15,12 @@ block content
 			section.col-lg-2
 				i(class='fa fa-cube', aria-hidden='true')
 				h4 TYPE
-				p=x.TYPE
+				p #{x.TYPE}
 			section.col-lg-3
 				i(class='fa fa-home', aria-hidden='true')
 				h4 HOMEPAGE
 				p visit the <a href=#{x.HOMEPAGE}>homepage</a> of the project
 			section.col-lg-2
-				if x.TYPE = 'Service'
-					i(class='fa fa-clone', aria-hidden='true')
-					h4 EXTENT
-					p not applicable
-				else if x.TYPE = 'Software'
-					i(class='fa fa-clone', aria-hidden='true')
-					h4 EXTENT
-					p not applicable
-				else
 					i(class='fa fa-clone', aria-hidden='true')
 					h4 EXTENT
 					p #{x.EXTENT} items
@@ -54,23 +44,14 @@ block content
 							span.punctuation ,
 			if x.SCOPE
 				section.col-lg-4
-					if x.TYPE = 'Service'
-						i(class='fa fa-star', aria-hidden='true')
-						h4 SCOPE
-						p not applicable
-					else if x.TYPE = 'Software'
-						i(class='fa fa-star', aria-hidden='true')
-						h4 SCOPE
-						p not applicable
-					else
 						i(class='fa fa-star', aria-hidden='true')
 						h4 SCOPE
 						p items are gathered by
 						span.punctuation
 						for y,z in x.SCOPE
-							p  #{y.value}
-							if z < x.SCOPE.length -1
-								span.punctuation ,
+							p #{y}
+						if z < x.SCOPE.length -1
+							span.punctuation ,
 						if x.SCOPE.length > 1
 							span.punctuation
 							span criteria
