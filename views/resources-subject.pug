@@ -11,7 +11,7 @@ block content
         each x,i in resourcesSubject
           section(id=x.TYPE, class='collapse col-lg-12')
               h5.col-lg-12.count= x.NUMBER + ' resources'
-              each y,i in resourcesList
+              each y,i in onlyNameAndURI
                 if( String(x.TYPE).valueOf() == String(y.SUBJECT).valueOf() )
                   a(href='./resources/'+y.ID, target="_blank", class="hover10 group col-lg-12 resource_collapse row")
                     if y.TYPE === 'Dataset'
@@ -39,6 +39,6 @@ block content
                     span #{y.NAME}
                   p.col-lg-8= y.DESC.replace(/(([^\s]+\s\s*){10})(.*)/,"$1…")
                   p.col-lg-12
-                    a(href='./resources/'+y.ID, target="_blank") [view record]
+                    a(href='./resources/'+y.ID, target="_blank") [see more]
                     a(href=y.URI, target="_blank")  [RDF]
                     a(href=y.HOMEPAGE, target="_blank")  [homepage]

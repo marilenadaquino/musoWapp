@@ -33,7 +33,7 @@ block content
         each x,i in resourcesCount
           section(id=x.TYPE.replace(" ", "-"), class='collapse col-lg-12')
               h5.col-lg-12.count= x.NUMBER + ' resources'
-              each y,i in resourcesList
+              each y,i in onlyNameAndURI
                 if( String(x.TYPE).valueOf() == String(y.TYPE).valueOf() )
                   a(href='./resources/'+y.ID, target="_blank", class="group col-lg-12 resource_collapse row")
                     if y.TYPE === 'Dataset'

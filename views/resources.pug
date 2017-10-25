@@ -5,7 +5,7 @@ block content
 
     section(id="toc_resources", class="col-lg-12")
       section(class='alphabet col-lg-12 row justify-content-center', id="alphabet")    
-      for x,i in resourcesList
+      for x,i in onlyNameAndURI
         section(class='list', class=x.NAME.charAt(0).toUpperCase())
           if x.TYPE === 'Dataset'
             i.fa.fa-bar-chart

@@ -4,92 +4,126 @@ block content
 	section.col-lg-12.no-border.desc
 		i(class='fa fa-info-circle', aria-hidden='true')
 		h4 ABOUT
-		p=x.DESC
+		p=data[0].DESC
 	section.graph
-		section(id=x.ID, class="resource_desc")
+		section(id=data[0].ID, class="resource_desc")
 			section.col-lg-2.justify-content-center
 				i(class='fa fa-diamond', aria-hidden='true')
 				h4 RDF
 				p
-					a(href=x.URI) data.open.ac.uk
+					a(href=data[0].URI) data.open.ac.uk
 			section.col-lg-2
 				i(class='fa fa-cube', aria-hidden='true')
 				h4 TYPE
-				p #{x.TYPE}
+				p 
+					a(href='../resources-type#'+ data[0].TYPE.replace(" ", "-") +'-div') #{data[0].TYPE}
 			section.col-lg-3
 				i(class='fa fa-home', aria-hidden='true')
 				h4 HOMEPAGE
-				p visit the <a href=#{x.HOMEPAGE}>homepage</a> of the project
-			section.col-lg-2
+				p visit the <a href=#{data[0].HOMEPAGE}>homepage</a> of the project
+			if data[0].EXTENT != 'not applicable'
+				section.col-lg-2
 					i(class='fa fa-clone', aria-hidden='true')
 					h4 EXTENT
-					p #{x.EXTENT} items
+					p #{data[0].EXTENT} items
+			if data[0].EXTENT === 'not applicable'
+				section.col-lg-2
+					i(class='fa fa-clone', aria-hidden='true')
+					h4 EXTENT
+					p not applicable
 			section.col-lg-2
 				i(class='fa fa-unlock-alt', aria-hidden='true')
 				h4 LICENSE
-				p=x.LICENSE
+				p=data[0].LICENSE
 			section.col-lg-2
 				i(class='fa fa-file', aria-hidden='true')
 				h4 SUBJECT
-				p=x.SUBJECT
-			if x.TASK
+				p
+				a(href='../resources-subject#'+ data[0].SUBJECT +'-div') #{data[0].SUBJECT}
+			if data[0].TASK != 'none'
 				section.col-lg-9
 					i(class='fa fa-tasks', aria-hidden='true')
 					h4 TASKS
-					p resources are meant to be reused for purposes or in situations such as: 
+					p purposes or situations wherein to reuse the resource: 
 					span.punctuation
-					for y,z in x.TASK
-						p  #{y.value}
-						if z < x.TASK.length -1
+					each y,z in data[0].TASK
+						p=y
+						if z < data[0].TASK.length -1
 							span.punctuation ,
-			if x.SCOPE
+			if data[0].TASK === 'none'
+				section.col-lg-9
+					i(class='fa fa-tasks', aria-hidden='true')
+					h4 TASKS
+					p none
+			if data[0].SCOPE != 'not applicable'
 				section.col-lg-4
 						i(class='fa fa-star', aria-hidden='true')
 						h4 SCOPE
 						p items are gathered by
 						span.punctuation
-						for y,z in x.SCOPE
+						for y,z in data[0].SCOPE
 							p #{y}
-						if z < x.SCOPE.length -1
+						if z < data[0].SCOPE.length -1
 							span.punctuation ,
-						if x.SCOPE.length > 1
+						if data[0].SCOPE.length > 1
 							span.punctuation
 							span criteria
 						else
 							span.punctuation
 							span criterion
-			if x.AUDIENCE
+			if data[0].SCOPE === 'not applicable'
+				section.col-lg-4
+						i(class='fa fa-star', aria-hidden='true')
+						h4 SCOPE
+						p not applicable
+			if data[0].AUDIENCE != 'none'
 				section.col-lg-3
 					i(class='fa fa-users', aria-hidden='true')
 					h4 AUDIENCE
-					for y,z in x.AUDIENCE
-						p #{y.value}
-						if z < x.AUDIENCE.length -1
-							span.punctuation ,
-			if x.MUSICFEATURE
+					span.punctuation
+					for y,z in data[0].AUDIENCE
+						p  #{y}
+						if z < data[0].AUDIENCE.length -1
+							span.punctuation , 
+			if data[0].AUDIENCE === 'none'
+				section.col-lg-3
+					i(class='fa fa-users', aria-hidden='true')
+					h4 AUDIENCE
+					p none
+			if data[0].MUSICFEATURE != 'none'
 				section.col-lg-4
 					i(class='fa fa-music', aria-hidden='true')
 					h4 MUSIC FEATURES
 					p for each item is described:
 					span.punctuation
-					for y,z in x.MUSICFEATURE
-						p  #{y.value}
-						if z < x.MUSICFEATURE.length -1
+					for y,z in data[0].MUSICFEATURE
+						p  #{y}
+						if z < data[0].MUSICFEATURE.length -1
 							span.punctuation , 
-			if x.SERVICE
+			if data[0].MUSICFEATURE === 'none'
+				section.col-lg-4
+					i(class='fa fa-music', aria-hidden='true')
+					h4 MUSIC FEATURES
+					p none
+			if data[0].SERVICE != 'none'
 				section.col-lg-12.no-border
 					i(class='fa fa-television', aria-hidden='true')
 					h4 FEATURES AND SERVICES
 					p the resource provides:
 					span.punctuation
-					for y,z in x.SERVICE
-						p  #{y.value}
-						if z < x.SERVICE.length -1
+					for y,z in data[0].SERVICE
+						p  #{y}
+						if z < data[0].SERVICE.length -1
 							span.punctuation ,
+			if data[0].SERVICE === 'none'
+				section.col-lg-12.no-border
+					i(class='fa fa-television', aria-hidden='true')
+					h4 FEATURES AND SERVICES
+					p none
 	section.social.no-border.desc
-				a(href="https://twitter.com/home?status=I%20found%20this%20interesting%20project%20"+encodeURIComponent(x.HOMEPAGE)+"%20in%20musoW%20catalogue") 
+				a(href="https://twitter.com/home?status=I%20found%20this%20interesting%20project%20"+encodeURIComponent(data[0].HOMEPAGE)+"%20in%20musoW%20catalogue") 
 					i.fa.fa-twitter
-				a(href="https://plus.google.com/share?url="+encodeURIComponent(x.HOMEPAGE))
+				a(href="https://plus.google.com/share?url="+encodeURIComponent(data[0].HOMEPAGE))
 					i.fa.fa-google-plus
-				a(href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(x.HOMEPAGE))
+				a(href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(data[0].HOMEPAGE))
 					i.fa.fa-facebook

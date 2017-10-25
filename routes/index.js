@@ -14,7 +14,18 @@ var DCITE = rdf.Namespace("http://purl.org/spar/datacite/")
 var SPARQL = SparqlClient.SPARQL;
 var endpoint = 'http://data.open.ac.uk/sparql';
 // SPARQL Queries
-var queryByName = 'SELECT ?uri ?resLabel ?name ?desc ?licenseLabel ?extentLabel ?homepage ?audienceLabel ?scopeLabel ?musicFeatureLabel ?subject ?task ?service FROM <http://data.open.ac.uk/context/musow> WHERE { ?uri <http://purl.org/spar/datacite/hasGeneralResourceType> ?resType ; <http://www.w3.org/2000/01/rdf-schema#label> ?name; <http://www.w3.org/2000/01/rdf-schema#comment> ?desc ; <http://xmlns.com/foaf/0.1/homepage> ?homepage . OPTIONAL { ?uri <http://purl.org/dc/terms/license> ?license. ?license <http://www.w3.org/2000/01/rdf-schema#label> ?licenseLabel } . OPTIONAL { ?uri <http://purl.org/dc/terms/extent> ?extent . ?extent <http://www.w3.org/2000/01/rdf-schema#label> ?extentLabel } . OPTIONAL { ?uri <http://purl.org/dc/terms/audience> ?audience . ?audience <http://www.w3.org/2000/01/rdf-schema#label> ?audienceLabel } . OPTIONAL { ?uri <http://www.w3.org/ns/oa#hasScope> ?scope . ?scope <http://www.w3.org/2000/01/rdf-schema#label> ?scopeLabel } . OPTIONAL { ?uri <http://xmlns.com/foaf/0.1/primaryTopic> ?musicFeature . ?musicFeature <http://www.w3.org/2000/01/rdf-schema#label> ?musicFeatureLabel } . OPTIONAL { ?uri <http://dbpedia.org/ontology/category> ?subjectURI . ?subjectURI <http://www.w3.org/2000/01/rdf-schema#label> ?subject . } . OPTIONAL { ?uri <http://data.open.ac.uk/musow/ontology/situation/task> ?taskURI . ?taskURI <http://www.w3.org/2000/01/rdf-schema#label> ?task } . OPTIONAL {?uri <http://schema.org/featureList> ?serviceURI . ?serviceURI <http://www.w3.org/2000/01/rdf-schema#label> ?service } . ?resType <http://www.w3.org/2000/01/rdf-schema#label> ?resLabel .} ORDER BY ?name';
+const queryByName = 
+	'SELECT ?uri ?resLabel ?name ?desc ?homepage ?subject ?audience' +
+		' FROM <http://data.open.ac.uk/context/musow>  ' +
+		' WHERE {  ' +
+		' 	?uri <http://purl.org/spar/datacite/hasGeneralResourceType> ?resType ; ' +
+		' 	<http://www.w3.org/2000/01/rdf-schema#label> ?name;  ' +
+		' 	<http://www.w3.org/2000/01/rdf-schema#comment> ?desc ;  ' +
+		' 	<http://xmlns.com/foaf/0.1/homepage> ?homepage .  ' +
+		' 	OPTIONAL { ?uri <http://dbpedia.org/ontology/category> ?subjectURI . ?subjectURI <http://www.w3.org/2000/01/rdf-schema#label> ?subject . } .  ' +
+		'   OPTIONAL { ?uri <http://purl.org/dc/terms/audience> ?typeaudience . ?typeaudience <http://www.w3.org/2000/01/rdf-schema#label> ?audience .} . ' +
+		' 	?resType <http://www.w3.org/2000/01/rdf-schema#label> ?resLabel .}  ' +
+		' ORDER BY ?name';
 
 var queryCountResources = 'SELECT (COUNT(?resource) as ?count) ?type FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?typeURI . ?typeURI <http://www.w3.org/2000/01/rdf-schema#label> ?type . } GROUP BY ?type ?count ORDER BY DESC (?count) ?type'
 var queryCountSubject = 'SELECT  (COUNT(?resource) as ?count) ?type FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://dbpedia.org/ontology/category> ?typeURI . ?typeURI <http://www.w3.org/2000/01/rdf-schema#label> ?type . } GROUP BY ?type ?count ORDER BY DESC (?count) ?type '
@@ -22,7 +33,6 @@ var queryAudience = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT
 var queryCountFormat = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?format ?formatLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?resourceType ; <http://data.open.ac.uk/musow/ontology/scope/format> ?format . ?format rdfs:label ?formatLabel . } group by ?format ?formatLabel ?count order by DESC(?count) LIMIT 10'
 var queryCountLicense = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?licenseLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?resourceType ; <http://purl.org/dc/terms/license> ?license . ?license rdfs:label ?licenseLabel } group by ?licenseLabel ?count order by DESC(?count) '
 var queryCountScale = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?label (COUNT(?project) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?project <http://purl.org/dc/terms/extent> ?size . ?size rdfs:label ?label . } GROUP BY ?label ORDER BY ?label'
-// var queryScopeAndType = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?resourceLabel ?topicLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://purl.org/spar/datacite/hasGeneralResourceType> ?resourceType ; <http://www.w3.org/ns/oa#hasScope> ?topic . ?resourceType rdfs:label ?resourceLabel . ?topic rdfs:label ?topicLabel . } group by ?resourceLabel ?topicLabel ?count order by ?resourceLabel DESC(?count)'
 var queryCountTopic = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT  ?topicLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://www.w3.org/ns/oa#hasScope> ?topic . ?topic rdfs:label ?topicLabel . ?resourceType rdfs:label ?resourceLabel . } group by ?topicLabel?count order by DESC (?count)'
 var queryCountFeature = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT  ?topicLabel (count(DISTINCT ?resource) AS ?count) FROM <http://data.open.ac.uk/context/musow> WHERE { ?resource <http://xmlns.com/foaf/0.1/primaryTopic> ?topic . ?topic rdfs:label ?topicLabel . ?resourceType rdfs:label ?resourceLabel . } group by ?topicLabel?count order by DESC (?count)'
 
@@ -41,7 +51,7 @@ var onlyNameAndURI = [];
 
 var client = new SparqlClient(endpoint, {
   defaultParameters: { format: 'json' }
-})
+}).register({ms: 'http://data.open.ac.uk/musow/'})
 
 function myfilter(array, test){
 	    var passedTest =[];
@@ -194,55 +204,24 @@ client.query(queryByName).execute({format: {resource: 'uri'}})
  			for (var j=0; j<results.results.bindings[i].desc.length; j++) {
   				var descs = results.results.bindings[i].desc[j].value;
  			};
- 			for (var j=0; j<results.results.bindings[i].licenseLabel.length; j++) {
-  				var licenses = results.results.bindings[i].licenseLabel[j].value;
- 			};
- 			for (var j=0; j<results.results.bindings[i].extentLabel.length; j++) {  				
-  				var extents = results.results.bindings[i].extentLabel[j].value;
- 			};
-			for (var j=0; j<results.results.bindings[i].audienceLabel.length; j++) {
-  				var audiences = results.results.bindings[i].audienceLabel;
-			};
-			for (var j=0; j<results.results.bindings[i].scopeLabel.length; j++) {
-				var scopes = results.results.bindings[i].scopeLabel[j].value;
-			};
-			for (var j=0; j<results.results.bindings[i].musicFeatureLabel.length; j++) {
-  				var musicFeatures = results.results.bindings[i].musicFeatureLabel;
-			};
-
 			for (var j=0; j<results.results.bindings[i].subject.length; j++) {
   				var subjects = results.results.bindings[i].subject[j].value;
 			};
-			for (var j=0; j<results.results.bindings[i].task.length; j++) {
-  				var tasks = results.results.bindings[i].task;
+			for (var j=0; j<results.results.bindings[i].audience.length; j++) {
+  				var audience = results.results.bindings[i].audience[j].value;
 			};
-			for (var j=0; j<results.results.bindings[i].service.length; j++) {
-  				var services = results.results.bindings[i].service;
-			};
-
-			resourcesList.push({
+			onlyNameAndURI.push({
 				"ID": results.results.bindings[i].uri.value.split(/[\/]+/).pop(),
 				"URI": results.results.bindings[i].uri.value,
-				"NAME": names,
+				"DESC": descs,
 				"TYPE": types,
 				"HOMEPAGE": homes,
-				"DESC": descs,
-				"LICENSE": licenses,
-				"EXTENT": extents,
-				"AUDIENCE": audiences,
-				"SCOPE": scopes,
-				"MUSICFEATURE": musicFeatures,
 				"SUBJECT": subjects,
-				"TASK": tasks,
-				"SERVICE": services
-			});
-			onlyNameAndURI.push({
-				"URI": results.results.bindings[i].uri.value,
-				"DESC": descs,
-				"NAME": names
+				"NAME": names,
+				"AUDIENCE": audience
 			});
 		};
-		console.log(resourcesList.length)
+		// console.dir(arguments, {depth: null});
 	}).catch(function (error) {
 		console.log('ops, something went wrong - queryByName')
 	});
@@ -255,7 +234,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/browse', function(req, res, next) {
-  res.render('browse', { title: 'browse' , onlyNameAndURI, resourcesList , 
+  res.render('browse', { title: 'browse' , onlyNameAndURI , 
   							resourcesCount , 
   							resourcesSubject, 
   							resourcesAudience , 
@@ -274,37 +253,109 @@ router.get('/browse', function(req, res, next) {
 });
 
 router.get('/resources', function(req, res, next) {
-	console.log(resourcesList);
-  res.render('resources', { title: 'resources by name', onlyNameAndURI, resourcesList , resourcesCount, resourcesSubject});
+	console.log(onlyNameAndURI)
+  res.render('resources', { title: 'resources by name', onlyNameAndURI});
 });
 
 router.get('/resources-type', function(req, res, next) {
-	console.log(resourcesList);
-  res.render('resources-type', { title: 'resources by type', onlyNameAndURI, resourcesList , resourcesCount, resourcesSubject});
+  res.render('resources-type', { title: 'resources by type', onlyNameAndURI, resourcesCount});
 });
 
 router.get('/resources-subject', function(req, res, next) {
-	console.log(resourcesList);
-  res.render('resources-subject', { title: 'resources by subject', onlyNameAndURI, resourcesList , resourcesCount, resourcesSubject});
+  res.render('resources-subject', { title: 'resources by subject', onlyNameAndURI, resourcesSubject});
 });
 
 router.get('/resources/:id', function(req, res, next) {
-	var id = req.params.id;	
-	var x = myfilter(resourcesList, function(item) { // filter the array of objects, return only the selected resource
-		return item.ID == id;}); 
-	console.log(x);
-	res.render('resource', { title: x.NAME, resourcesList, id, x, onlyNameAndURI});
+	const id = req.params.id;
+	var data = [];
+	// var x = [];
+	// var x = myfilter(resourcesList, function(item) { // filter the array of objects, return only the selected resource
+	// 	return item.ID == id;}); 
+	var queryResource = 'SELECT * FROM <http://data.open.ac.uk/context/musow> ' +
+						'WHERE { ' +
+							'?uri <http://purl.org/spar/datacite/hasGeneralResourceType> ?resType ; ' +
+							' <http://www.w3.org/2000/01/rdf-schema#label> ?name; ' +
+							' <http://www.w3.org/2000/01/rdf-schema#comment> ?desc ; ' +
+							' <http://xmlns.com/foaf/0.1/homepage> ?homepage . ' +
+							' OPTIONAL { ?uri <http://purl.org/dc/terms/license> ?license. ?license <http://www.w3.org/2000/01/rdf-schema#label> ?licenseLabel } . ' +
+							' OPTIONAL { ?uri <http://purl.org/dc/terms/extent> ?extent . ?extent <http://www.w3.org/2000/01/rdf-schema#label> ?extentLabel } . ' +
+							' OPTIONAL { ?uri <http://purl.org/dc/terms/audience> ?audience . ?audience <http://www.w3.org/2000/01/rdf-schema#label> ?audienceLabel } . ' +
+							' OPTIONAL { ?uri <http://www.w3.org/ns/oa#hasScope> ?scope . ?scope <http://www.w3.org/2000/01/rdf-schema#label> ?scopeLabel } . ' +
+							' OPTIONAL { ?uri <http://xmlns.com/foaf/0.1/primaryTopic> ?musicFeature . ?musicFeature <http://www.w3.org/2000/01/rdf-schema#label> ?musicFeatureLabel } . ' +
+							' OPTIONAL { ?uri <http://dbpedia.org/ontology/category> ?subjectURI . ?subjectURI <http://www.w3.org/2000/01/rdf-schema#label> ?subject . } . ' +
+							' OPTIONAL { ?uri <http://data.open.ac.uk/musow/ontology/situation/task> ?taskURI . ?taskURI <http://www.w3.org/2000/01/rdf-schema#label> ?task } . ' +
+							' OPTIONAL {?uri <http://schema.org/featureList> ?serviceURI . ?serviceURI <http://www.w3.org/2000/01/rdf-schema#label> ?service } . ' +
+							' ?resType <http://www.w3.org/2000/01/rdf-schema#label> ?resLabel .} ORDER BY ?name';
+	var client = new SparqlClient(endpoint, { defaultParameters: { format: 'json' } }).register({ms: 'http://data.open.ac.uk/musow/'});
+	 
+	client.query(queryResource)
+	  .bind('uri', {ms: id})
+	  .execute({format: {resource: 'name' }})
+	  .then(function (results) {
+	  	for (var i=0; i<results.results.bindings.length; i++) {
+		  		if (results.results.bindings[i].scopeLabel.length > 0) {
+		  			var scope = results.results.bindings[i].scopeLabel[0].value
+		  		} else { var scope = 'not applicable'};
+		  		if (results.results.bindings[i].extentLabel.length > 0) {
+		  			var extent = results.results.bindings[i].extentLabel[0].value
+		  		} else { var extent = 'not applicable'};
+		  		if (results.results.bindings[i].musicFeatureLabel.length > 0) {
+		  			var musicFeature = [];
+		  			for (var j=0; j<results.results.bindings[i].musicFeatureLabel.length; j++) {
+		  				musicFeature.push(results.results.bindings[i].musicFeatureLabel[j].value);
+		  			} 
+		  		} else { var musicFeature = 'none'};
+		  		if (results.results.bindings[i].task.length > 0) {
+		  			var task = [];
+		  			for (var j=0; j<results.results.bindings[i].task.length; j++) {
+		  				task.push(results.results.bindings[i].task[j].value);
+		  			} 
+		  		} else { var task = 'none'};
+		  		if (results.results.bindings[i].service.length > 0) {
+		  			var service = [];
+		  			for (var j=0; j<results.results.bindings[i].service.length; j++) {
+		  				service.push(results.results.bindings[i].service[j].value);
+		  			} 
+		  		} else { var audience = 'none'};
+		  		if (results.results.bindings[i].audienceLabel.length > 0) {
+		  			var audience = [];
+		  			for (var j=0; j<results.results.bindings[i].audienceLabel.length; j++) {
+		  				audience.push(results.results.bindings[i].audienceLabel[j].value);
+		  			} 
+		  		} else { var audience = 'none'};
+	    	data.push( {
+	    		"ID": id, 
+	    		"NAME": results.results.bindings[i].name.value,
+	    		"URI": 'http://data.open.ac.uk/musow/'+id,
+				"TYPE": results.results.bindings[i].resLabel[0].value,
+				"HOMEPAGE": results.results.bindings[i].homepage[0].value,
+				"DESC": results.results.bindings[i].desc[0].value,
+				"LICENSE": results.results.bindings[i].licenseLabel[0].value,
+				"EXTENT": extent,
+				"AUDIENCE": audience,
+				"SCOPE": scope,
+				"MUSICFEATURE": musicFeature,
+				"SUBJECT": results.results.bindings[i].subject[0].value,
+				"TASK": task,
+				"SERVICE": service
+	    	} );
+	    	console.log(data);
+	    };	
+	    res.render('resource', { title: data[0].NAME, data, onlyNameAndURI});
+		}).catch(function (error) {
+		console.log('ops, something went wrong - queryResource')
+	});
 });
 
 // other pages
 // explore.pug TBD
 router.get('/explore', function(req, res, next) {
-  res.render('explore', { title: 'explore', resourcesList , onlyNameAndURI});
+  res.render('explore', { title: 'explore', onlyNameAndURI});
 });
 
 // contribute.pug
 router.get('/contribute', function(req, res, next) {
-  res.render('contribute', { title: 'contribute to', resourcesList , onlyNameAndURI});
+  res.render('contribute', { title: 'contribute to'});
 });
 
 module.exports = router;

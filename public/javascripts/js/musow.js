@@ -18,7 +18,7 @@ $(document).ready(function() {
         $(e.currentTarget).parent('span').addClass('active');
     });
 
-    // open dropdown on the base of the URI
+    // open dropdown on the basis of the URI
     var path = window.location.href.split("#").pop();
 
     $('.alphabet span').each(function () {
