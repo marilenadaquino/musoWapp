@@ -63,14 +63,8 @@ block content
 						span.punctuation
 						for y,z in data[0].SCOPE
 							p #{y}
-						if z < data[0].SCOPE.length -1
-							span.punctuation ,
-						if data[0].SCOPE.length > 1
-							span.punctuation
-							span criteria
-						else
-							span.punctuation
-							span criterion
+							if z < data[0].SCOPE.length -1
+								span.punctuation ,
 			if data[0].SCOPE === 'not applicable'
 				section.col-lg-4
 						i(class='fa fa-star', aria-hidden='true')

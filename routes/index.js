@@ -294,7 +294,11 @@ router.get('/resources/:id', function(req, res, next) {
 	  .then(function (results) {
 	  	for (var i=0; i<results.results.bindings.length; i++) {
 		  		if (results.results.bindings[i].scopeLabel.length > 0) {
-		  			var scope = results.results.bindings[i].scopeLabel[0].value
+		  			var scope = [];
+		  			for (var j=0; j<results.results.bindings[i].scopeLabel.length; j++) {
+		  				scope.push(results.results.bindings[i].scopeLabel[j].value);
+		  			} 
+
 		  		} else { var scope = 'not applicable'};
 		  		if (results.results.bindings[i].extentLabel.length > 0) {
 		  			var extent = results.results.bindings[i].extentLabel[0].value
